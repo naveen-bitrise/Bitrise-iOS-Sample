@@ -1,66 +1,67 @@
 ---
-format_version: '8'
+format_version: '13'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: ios
-trigger_map:
-- push_branch: "*"
-  workflow: primary
-- pull_request_source_branch: "*"
-  workflow: primary
 workflows:
-  deploy:
+  archive_and_export_app:
+    summary: Run your Xcode tests and create an IPA file to install your app on a
+      device or share it with your team.
+    description: The workflow will first clone your Git repository, cache and install
+      your project's dependencies if any, run your Xcode tests, export an IPA file
+      from the project and save it.
     steps:
-    - activate-ssh-key@4:
-        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
-    - git-clone@4: {}
-    - cache-pull@2: {}
-    - certificate-and-profile-installer@1: {}
-    - recreate-user-schemes@1:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-    - xcode-archive@3:
+    - activate-ssh-key@4: {}
+    - git-clone@8: {}
+    - xcode-test@5:
         inputs:
         - project_path: "$BITRISE_PROJECT_PATH"
         - scheme: "$BITRISE_SCHEME"
-        - force_code_sign_identity: "$BITRISE_CODE_SIGNING_IDENTITY"
-        - force_provisioning_profile: "$BITRISE_PROFILE_ID"
-        - compile_bitcode: 'no'
-        - upload_bitcode: 'no'
-        - team_id: "$BITRISE_TEAM"
-        - export_method: "$BITRISE_EXPORT_METHOD"
-    - deploy-to-bitrise-io@1: {}
-    - cache-push@2: {}
-  primary:
-    steps:
-    - activate-ssh-key@4:
-        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
-    - git-clone@4: {}
-    - cache-pull@2: {}
-    - certificate-and-profile-installer@1: {}
-    - xcode-test@2:
+        - test_repetition_mode: retry_on_failure
+        - cache_level: none
+    - xcode-archive@5:
         inputs:
         - project_path: "$BITRISE_PROJECT_PATH"
         - scheme: "$BITRISE_SCHEME"
-    - deploy-to-bitrise-io@1: {}
-    - cache-push@2: {}
+        - distribution_method: "$BITRISE_DISTRIBUTION_METHOD"
+        - automatic_code_signing: api-key
+        - cache_level: none
+    - deploy-to-bitrise-io@2: {}
+    triggers:
+      push:
+      - branch: master
+      pull_request:
+      - target_branch: master
+  run_tests:
+    summary: Run your Xcode tests and get the test report.
+    description: The workflow will first clone your Git repository, cache and install
+      your project's dependencies if any, run your Xcode tests and save the test results.
+    steps:
+    - activate-ssh-key@4: {}
+    - git-clone@8: {}
+    - xcode-test@5:
+        inputs:
+        - project_path: "$BITRISE_PROJECT_PATH"
+        - scheme: "$BITRISE_SCHEME"
+        - test_repetition_mode: retry_on_failure
+        - cache_level: none
+    - deploy-to-bitrise-io@2: {}
+meta:
+  bitrise.io:
+    stack: osx-xcode-16.0.x
+    machine_type_id: g2-m1.8core
 app:
-  status_report_name: 'Bitrise build Test'
   envs:
-  - opts:
+  - BITRISE_PROJECT_PATH: BitriseTest.xcodeproj
+    opts:
       is_expand: false
-    BITRISE_PROJECT_PATH: BitriseTest.xcodeproj
-  - opts:
+  - BITRISE_SCHEME: BitriseTest
+    opts:
       is_expand: false
-    BITRISE_SCHEME: BitriseTest
-  - opts:
+  - BITRISE_DISTRIBUTION_METHOD: ad-hoc
+    opts:
       is_expand: false
-    BITRISE_EXPORT_METHOD: development
-  - opts:
-      is_expand: false
-    BITRISE_PROFILE_ID: e682b378-3286-41b8-aeeb-4b4398c0e025
-  - opts:
-      is_expand: false
-    BITRISE_CODE_SIGNING_IDENTITY: 'iPhone Developer: Dev Portal Bot Bitrise (E89JV3W9K4)'
-  - opts:
-      is_expand: false
-    BITRISE_TEAM: 72SA8V3WYL
+trigger_map:
+- workflow: run_tests
+  push_branch: master
+- workflow: run_tests
+  pull_request_source_branch: "*"
