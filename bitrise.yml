@@ -44,6 +44,7 @@ workflows:
     - deploy-to-bitrise-io@1: {}
     - cache-push@2: {}
 app:
+  status_report_name: 'Bitrise build Test'
   envs:
   - opts:
       is_expand: false
