@@ -4,9 +4,7 @@ platform :ios do
   desc "Install Xcode"
   lane :install_xcode do
     xcode_install(
-      version: "13.0",
-      download: true,
-      download_retry_attempts: 3
+      version: "13.0"
     )
   end
 end
