@@ -3,8 +3,8 @@ default_platform(:ios)
 platform :ios do
   desc "Install Xcode"
   lane :install_xcode do
-    xcode_install(
-      version: "13.0"
+    xcodes(
+      version: "13.2"
     )
   end
 end
