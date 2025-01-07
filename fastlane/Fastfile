@@ -3,8 +3,7 @@ default_platform(:ios)
 platform :ios do
   desc "Install Xcode"
   lane :install_xcode do
-    xcodes(
-      version: "13.2"
-    )
+    sh "brew install xcodes" # Make sure xcodes is installed
+    sh "xcodes install 13.2 --update --select --verbose" # Added verbose flag for more logs
   end
 end
