@@ -59,4 +59,22 @@ class BitriseTestUITests: XCTestCase {
             takeScreenshot(name: "After Launch Performance Test")
         }
     }
+    
+    static var executionCount = 0
+    
+    func testWithCountBasedFailure() throws {
+        // Track execution count for this test
+        BitriseTestUITests.executionCount += 1
+        
+        let app = XCUIApplication()
+        app.launch()
+        
+        takeScreenshot(name: "After Launch for testWithCountBasedFailure")
+        
+        // Fail on first two attempts, succeed on third
+        XCTAssertGreaterThanOrEqual(BitriseTestUITests.executionCount, 3,
+            "Simulating failure that should pass on 3rd attempt")
+        
+        // Rest of your test...
+    }
 }
