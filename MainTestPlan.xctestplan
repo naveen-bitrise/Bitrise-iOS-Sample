@@ -1,0 +1,49 @@
+{
+  "configurations" : [
+    {
+      "id" : "3A79C5F3-38EB-4636-84F9-088F9DABE88E",
+      "name" : "Configuration 1",
+      "options" : {
+        "language" : "en",
+        "locationScenario" : {
+          "identifier" : "New York, NY, USA",
+          "referenceType" : "built-in"
+        },
+        "region" : "US"
+      }
+    },
+    {
+      "id" : "AE32E1FE-2DF1-4D37-9205-377FA54DB790",
+      "name" : "Configuration 2",
+      "options" : {
+        "language" : "es-US",
+        "locationScenario" : {
+          "identifier" : "San Francisco, CA, USA",
+          "referenceType" : "built-in"
+        },
+        "region" : "US"
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:BitriseTest.xcodeproj",
+        "identifier" : "A1F9B11325C380F500E21DE4",
+        "name" : "BitriseTestTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:BitriseTest.xcodeproj",
+        "identifier" : "A1F9B11E25C380F500E21DE4",
+        "name" : "BitriseTestUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

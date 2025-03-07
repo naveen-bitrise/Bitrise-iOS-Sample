@@ -33,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		312F9F2B2D7B4AB000EF875A /* MainTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MainTestPlan.xctestplan; sourceTree = "<group>"; };
 		A1F9B10325C380F200E21DE4 /* BitriseTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BitriseTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1F9B10625C380F200E21DE4 /* BitriseTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitriseTestApp.swift; sourceTree = "<group>"; };
 		A1F9B10825C380F200E21DE4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +76,7 @@
 		A1F9B0FA25C380F200E21DE4 = {
 			isa = PBXGroup;
 			children = (
+				312F9F2B2D7B4AB000EF875A /* MainTestPlan.xctestplan */,
 				A1F9B10525C380F200E21DE4 /* BitriseTest */,
 				A1F9B11725C380F500E21DE4 /* BitriseTestTests */,
 				A1F9B12225C380F500E21DE4 /* BitriseTestUITests */,
