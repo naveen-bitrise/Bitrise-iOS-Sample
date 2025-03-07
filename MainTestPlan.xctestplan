@@ -37,7 +37,6 @@
       }
     },
     {
-      "enabled" : false,
       "target" : {
         "containerPath" : "container:BitriseTest.xcodeproj",
         "identifier" : "A1F9B11E25C380F500E21DE4",
